@@ -1,7 +1,7 @@
 import React from "react";
 
 interface HeaderProps {
-    
+    addUser: Function; 
 }
  
 interface HeaderState {
@@ -25,6 +25,13 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             [fieldName]: event.target.value
         })
     }
+    addUser = () => {
+        this.props.addUser ({
+            fullName: this.state.fullName,
+            email: this.state.email,
+            status: 'active'
+        })
+    }
 
     render() { 
         return ( 
@@ -38,7 +45,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                     <input value={this.state.email}
                     onChange={(e) => this.handleInputChange(e, 'email')}
                     type="text" placeholder="Email" className="form-control mx-3" />
-                    <button className="btn btn-info text-white">Add</button>
+                    <button onClick={this.addUser} className="btn btn-info text-white">Add</button>
                 </div>
             </div>
          );
