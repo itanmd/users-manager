@@ -63,7 +63,7 @@ class Users extends React.Component<UsersProps, UsersState> {
                 this.setState(() => ({
                     addSuccess: false
                 }))
-            }, 4000)
+            }, 2000)
         })
     }
 
@@ -87,7 +87,7 @@ class Users extends React.Component<UsersProps, UsersState> {
                 this.setState(() => ({
                     deleteSuccess: false
                 }))
-            }, 4000)
+            }, 2000)
         })
     }
 
