@@ -19,13 +19,14 @@ function Message(props: Props) {
             default:
                 return 'alert-secondary'
         }
-    }
+    } 
 
     return ( 
-        <div className="alert alert-warning" role="alert">
+        <div className={`alert ${getAlertCss()}`} role="alert">
          {props.children}
         </div>
      );
+     
 }
 
 export default Message;
