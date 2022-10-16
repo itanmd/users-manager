@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../Header/Header";
+import Message from "../Message/Message";
 import Table from "../Table/Table";
 
 export type StatusType = 'active' | 'expired' | 'banned';
@@ -17,6 +18,8 @@ interface UsersProps {
  
 interface UsersState {
     users: Array<IUser>;
+    addSuccess: boolean;
+    deleteSuccess: boolean;
 }
  
 class Users extends React.Component<UsersProps, UsersState> {
@@ -25,7 +28,9 @@ class Users extends React.Component<UsersProps, UsersState> {
         super(props);
 
         this.state = {
-            users: []
+            users: [],
+            addSuccess: false,
+            deleteSuccess: false
         }
     }
 
@@ -50,8 +55,15 @@ class Users extends React.Component<UsersProps, UsersState> {
         .then(res =>res.json())
         .then(json => {
             this.setState(() => ({
-                users: [...this.state.users, json]
+                users: [...this.state.users, json],
+                addSuccess: true
             }))
+
+            setTimeout(() => {
+                this.setState(() => ({
+                    addSuccess: false
+                }))
+            }, 4000)
         })
     }
 
@@ -67,8 +79,15 @@ class Users extends React.Component<UsersProps, UsersState> {
         .then(json => {
             const updated = this.state.users.filter(user => user._id !== json._id)
             this.setState(() => ({
-                users: updated
+                users: updated,
+                deleteSuccess: true
             }))
+
+            setTimeout(() => {
+                this.setState(() => ({
+                    deleteSuccess: false
+                }))
+            }, 4000)
         })
     }
 
@@ -78,9 +97,15 @@ class Users extends React.Component<UsersProps, UsersState> {
                 <Header addUser={this.addUser} />
                 {
                     (this.state.users.length === 0) &&
-                    <div className="alert alert-warning" role="alert">
-                        No users to display
-                    </div>
+                    <Message type="warning" children="No users to display"/>
+                }
+                {
+                    (this.state.addSuccess) &&
+                    <Message type="success" children="New user has been successfully added" />
+                }
+                {
+                    (this.state.deleteSuccess) && 
+                    <Message type="danger" children="User has been successfully removed from your list"/>
                 }
                 <Table users={this.state.users} deleteUser={this.deleteUser} />
             </div>

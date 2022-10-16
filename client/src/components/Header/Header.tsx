@@ -31,7 +31,13 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             email: this.state.email,
             status: 'active'
         })
+        this.setState(() => ({
+            fullName: '',
+            email: ''
+        }))
     }
+
+    
 
     render() { 
         return ( 
@@ -40,7 +46,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                 <div className="d-flex">
                     <input value={this.state.fullName}
                     onChange={(e) => this.handleInputChange(e, 'fullName')}
-                    type="text" placeholder="Name" className="form-control" />
+                    type="text" placeholder="Full Name" className="form-control" />
                     
                     <input value={this.state.email}
                     onChange={(e) => this.handleInputChange(e, 'email')}
