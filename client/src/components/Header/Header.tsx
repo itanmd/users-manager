@@ -1,4 +1,5 @@
 import React from "react";
+import { StatusType } from "../Users/Users";
 
 interface HeaderProps {
     addUser: Function; 
@@ -7,6 +8,7 @@ interface HeaderProps {
 interface HeaderState {
     fullName: string;
     email: string;
+    status: string;
 }
  
 class Header extends React.Component<HeaderProps, HeaderState> {
@@ -16,7 +18,8 @@ class Header extends React.Component<HeaderProps, HeaderState> {
 
     this.state = {
         fullName: '',
-        email: ''}
+        email: '',
+        status: 'active'}
     }
 
     handleInputChange = (event: React.ChangeEvent<HTMLInputElement> ,fieldName: string) => {
@@ -25,11 +28,19 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             [fieldName]: event.target.value
         })
     }
+
+    handleStatusSelect = (event: React.ChangeEvent<HTMLSelectElement>, fieldName: string) => {
+        this.setState({
+            ...this.state,
+            [fieldName]: event.target.value
+        })
+    }
+
     addUser = () => {
         this.props.addUser ({
             fullName: this.state.fullName,
             email: this.state.email,
-            status: 'active'
+            status: this.state.status
         })
         this.setState(() => ({
             fullName: '',
@@ -51,6 +62,15 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                     <input value={this.state.email}
                     onChange={(e) => this.handleInputChange(e, 'email')}
                     type="text" placeholder="Email" className="form-control mx-3" />
+
+                    
+                    <select onChange={(e) => this.handleStatusSelect(e, 'status')}
+                        value={this.state.status} className="form-select text-capitalize">
+                        <option value='expired'>expired</option>
+                        <option value='banned'>banned</option>
+                        <option value='active'>active</option>
+                    </select>
+
                     <button onClick={this.addUser} className="btn btn-info text-white">Add</button>
                 </div>
             </div>
